@@ -1,5 +1,5 @@
 export interface ISlot {
-  startTime: string;     
-  endTime: string;       
+  startTime: Date;     
+  endTime: Date;       
   isGreenSlot: boolean;
 }

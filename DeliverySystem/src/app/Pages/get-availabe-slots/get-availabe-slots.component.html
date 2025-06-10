@@ -46,7 +46,14 @@
             <div class="slot-card" [ngClass]="{'green-slot': slot.isGreenSlot}">
                 <div class="slot-time">
                     <i class="bi bi-clock-fill"></i>
-                    {{ formatUtcDateTimeRange(slot.startTime, slot.endTime) }}
+
+                   <!-- {{slot.startTime| date:'mediumDate' }} -  {{slot.startTime| date:'shortTime' }} -->
+
+                   {{ calcTime(slot.startTime) | date:'mediumDate' }} 
+                   <br>
+                   {{ calcTime(slot.startTime) | date:'shortTime' }} :
+                   {{ calcTime(slot.endTime) | date:'shortTime' }} 
+
                 </div>
                 @if (slot.isGreenSlot) {
                 <div class="green-badge">

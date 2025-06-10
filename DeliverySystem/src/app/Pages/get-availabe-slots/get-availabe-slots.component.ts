@@ -66,7 +66,7 @@ export class GetAvailabeSlotsComponent implements OnInit {
 
     const DeliverySlotRequest = {
       products: selectedProducts,
-      orderTime: new Date()
+      orderTime: new Date().toISOString()
     };
 
     this._ShowProductsService.getAvailableSlots(DeliverySlotRequest).subscribe({
@@ -90,29 +90,12 @@ onSearch() {
       product.name.toLowerCase().includes(searchTerm)
     );
   }
-// formatUtcTime(utcTime: string): string {
-//   const date = new Date(utcTime);
-//   return date.toUTCString(); 
-// }
-  
-formatUtcDateTimeRange(startUtc: string, endUtc: string): string {
-  const startDate = new Date(startUtc);
-  const endDate = new Date(endUtc);
 
-  const day = startDate.getUTCDate().toString().padStart(2, '0');
-  const month = (startDate.getUTCMonth() + 1).toString().padStart(2, '0');
-  const year = startDate.getUTCFullYear();
-
-  const startHours = startDate.getUTCHours().toString().padStart(2, '0');
-  const startMinutes = startDate.getUTCMinutes().toString().padStart(2, '0');
-
-  const endHours = endDate.getUTCHours().toString().padStart(2, '0');
-  const endMinutes = endDate.getUTCMinutes().toString().padStart(2, '0');
-
-  return ` ${day}/${month}/${year} : ${startHours}:${startMinutes} - ${endHours}:${endMinutes}  `;
+calcTime(date: Date): Date {
+  const TimeNow = new Date(date);
+  TimeNow.setHours(TimeNow.getHours() - 3); 
+  return TimeNow;
 }
-
-
 
 }
 

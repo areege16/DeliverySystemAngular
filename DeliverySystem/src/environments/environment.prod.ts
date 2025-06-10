@@ -1,6 +1,6 @@
-export const environment = {
-  production: false,
+// export const environment = {
+//   production: true,
 
- BaseUrl: 'https://grocerydeliverysystem.runasp.net/',
+//  BaseUrl: 'https://grocerydeliverysystem.runasp.net/',
 
-};
+// };
