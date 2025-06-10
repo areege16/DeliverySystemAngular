@@ -1,0 +1,73 @@
+<div class="container">
+    <h2 class="page-title">Select Products for Delivery</h2>
+
+    <div class="search-container">
+        <i class="bi bi-search search-icon"></i>
+        <input type="text" [(ngModel)]="searchText" (input)="onSearch()" placeholder="Search products..."
+            class="search-input">
+    </div>
+
+    <div class="product-list card">
+        <h3 class="section-title">Available Products</h3>
+
+
+        @if (filteredProducts.length === 0) {
+        <div class="no-results">
+            No products found matching "{{ searchText }}"
+        </div>
+        }
+
+        @for (product of filteredProducts ; track $index) {
+        <div class="product-item">
+            <label class="product-label">
+                <input type="checkbox" [(ngModel)]="product.selected" class="product-checkbox" />
+                <span class="product-name">{{ product.name }}</span>
+                <span class="product-price">{{ product.price | currency:'EGP'}}</span>
+
+                <span class="product-type" [ngClass]="{
+                    'type-instock': product.type === 0,
+                    'type-fresh': product.type === 1,
+                    'type-external': product.type === 2
+                }">({{ TypeName(product.type) }})</span>
+            </label>
+        </div>
+        }
+
+        <button class="primary-button" (click)="showSelectedSlots()">Show Available Delivery Slots</button>
+    </div>
+
+
+    @if (slots.length > 0) {
+
+    <div class="slots-container card">
+        <h3 class="section-title">Available Delivery Slots</h3>
+        <div class="slots-grid">
+            @for (slot of slots; track $index) {
+            <div class="slot-card" [ngClass]="{'green-slot': slot.isGreenSlot}">
+                <div class="slot-time">
+                    <i class="bi bi-clock-fill"></i>
+                    {{ formatUtcDateTimeRange(slot.startTime, slot.endTime) }}
+                </div>
+                @if (slot.isGreenSlot) {
+                <div class="green-badge">
+                    <i class="bi bi-leaf-fill"></i> Preferred green Slots
+                </div>
+                }
+            </div>
+            }
+        </div>
+    </div>
+    }
+
+    
+<div class="back-button-container">
+    <a
+      [routerLink]="['/home']"
+      routerLinkActive="router-link-active"
+      class="custom-button"
+    >
+      <i class="bi bi-arrow-left-circle"></i> Back
+    </a>
+  </div>
+</div>
+    
