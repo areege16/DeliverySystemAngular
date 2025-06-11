@@ -21,7 +21,9 @@ export class GetAvailabeSlotsComponent implements OnInit {
   products: IProduct[] = []
   slots: ISlot[] = [];
   searchText: string = ''
- filteredProducts: IProduct[] = [];
+  filteredProducts: IProduct[] = [];
+  pageNumber: number = 1;
+  pageSize: number = 14;
 
   constructor(private _ShowProductsService: CallCenterServiceService) { }
 
@@ -66,12 +68,18 @@ export class GetAvailabeSlotsComponent implements OnInit {
 
     const DeliverySlotRequest = {
       products: selectedProducts,
-      orderTime: new Date().toISOString()
+      orderTime: new Date().toISOString(),
+      pageNumber: this.pageNumber,
+       pageSize: this.pageSize
     };
 
     this._ShowProductsService.getAvailableSlots(DeliverySlotRequest).subscribe({
       next: (res) => {
-        this.slots = res;
+      if (res.length === 0 && this.pageNumber > 1) {
+      this.pageNumber--;
+    } else {
+      this.slots = res;
+    }
         console.log('Available slots:', res);
       },
       error: (err) => {
@@ -79,6 +87,20 @@ export class GetAvailabeSlotsComponent implements OnInit {
       }
     });
   }
+
+  
+  nextPage() {
+    this.pageNumber++;
+    this.showSelectedSlots();
+  }
+
+  prevPage() {
+    if (this.pageNumber > 1) {
+      this.pageNumber--;
+      this.showSelectedSlots();
+    }
+  }
+
 onSearch() {
     if (!this.searchText.trim()) {
       this.filteredProducts = [...this.products];

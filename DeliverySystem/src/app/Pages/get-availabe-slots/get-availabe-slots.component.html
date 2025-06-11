@@ -47,12 +47,12 @@
                 <div class="slot-time">
                     <i class="bi bi-clock-fill"></i>
 
-                   <!-- {{slot.startTime| date:'mediumDate' }} -  {{slot.startTime| date:'shortTime' }} -->
+                    <!-- {{slot.startTime| date:'mediumDate' }} -  {{slot.startTime| date:'shortTime' }} -->
 
-                   {{ calcTime(slot.startTime) | date:'mediumDate' }} 
-                   <br>
-                   {{ calcTime(slot.startTime) | date:'shortTime' }} :
-                   {{ calcTime(slot.endTime) | date:'shortTime' }} 
+                    {{ calcTime(slot.startTime) | date:'mediumDate' }}
+                    <br>
+                    {{ calcTime(slot.startTime) | date:'shortTime' }} :
+                    {{ calcTime(slot.endTime) | date:'shortTime' }}
 
                 </div>
                 @if (slot.isGreenSlot) {
@@ -63,18 +63,20 @@
             </div>
             }
         </div>
+        <div class="pagination-controls">
+            <button class="pagination-button prev" (click)="prevPage()" [disabled]="pageNumber === 1">
+                <i class="bi bi-chevron-left"></i> Previous
+            </button>
+            <span class="page-info">Page {{ pageNumber }} </span>
+            <button class="pagination-button next" (click)="nextPage()" [disabled]="slots.length < pageSize">
+                Next <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
     </div>
     }
-
-    
-<div class="back-button-container">
-    <a
-      [routerLink]="['/home']"
-      routerLinkActive="router-link-active"
-      class="custom-button"
-    >
-      <i class="bi bi-arrow-left-circle"></i> Back
-    </a>
-  </div>
+    <div class="back-button-container">
+        <a [routerLink]="['/home']" routerLinkActive="router-link-active" class="custom-button">
+            <i class="bi bi-arrow-left-circle"></i> Back
+        </a>
+    </div>
 </div>
-    
